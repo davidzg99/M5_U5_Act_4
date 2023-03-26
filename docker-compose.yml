@@ -24,31 +24,12 @@ services:
     depends_on:
       - db
     networks:
-      - front
       - back
 
   frontend:
     image: jrodrigv/webapp:latest
     depends_on:
       - backend
-    networks:
-      - loadbalancer
-      - front
-
-  frontend2:
-    image: jrodrigv/webapp:latest
-    depends_on:
-      - backend
-    networks:
-      - loadbalancer
-      - front
-
-  backend2:
-    image: jrodrigv/webapi:latest
-    environment:
-      ASPNETCORE_URLS: http://+:5000
-    depends_on:
-      - db
     networks:
       - front
       - back
@@ -61,11 +42,9 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - frontend
-      - frontend2
     networks:
-      - loadbalancer
+      - front
 
 networks:
-  loadbalancer:
   front:
   back:
